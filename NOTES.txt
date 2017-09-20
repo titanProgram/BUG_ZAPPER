@@ -1,0 +1,5 @@
+- the program should have a game start mode
+	- if the bug reaches the end the game should end and the players score will be displayed on the screen
+- the game should have a bug reset function?
+	- when the game starts the bug will spawn at the top of the screen and move down with a new random x and x co-ordinate
+ 	- if the bug is hit reset the bug to the top of the screen
