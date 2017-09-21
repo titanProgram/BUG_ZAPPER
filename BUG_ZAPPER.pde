@@ -25,6 +25,7 @@
   1. I can't use a while loop within the draw function! This means I will have to restructer
   my code. Try putting the main gameState in a function and calling that function in the
   pre-defined draw() function.
+  2. bugObect.display not plotting top triangle at specified x and y position
 */
 
 // GLOBAL VARIABLES
@@ -47,33 +48,20 @@ void setup()
   size( 500, 500 );
   frameRate( 60 );
   // CREATING OBJECTS
-  bugObject = new bug( 25, 1, color( 0, 100, 0 ), color( 0, 255, 0 ), color( 255, 255, 0 ) );
+  bugObject = new bug( 100, 1, color( 0, 100, 0 ), color( 0, 255, 0 ), color( 255, 255, 0 ) );
   playerObject = new player( 100, 1 );
 }// END setup()
 
 void draw() 
 {
-      
-  if ( frameCount % 60 == 0 )
-  {
-    bugX += random( 50, 50 );
-    bugY += random( 10, 25 );// random( bugSpeed, bugSpeed * 2 )?
-    if ( !inBoundsX( bugX ) )
-    {
-      if ( bugX - bugObject.bugsize > width )
-      {
-      bugX += random( -100, -50 );
-      }// END if()
-      else if ( bugX < 0 )
-      {
-        bugX += random( 50, 100 );
-      }// END else if()
-    }// END if()
-    bugObject.display( bugX, bugY );
-  }// END if()
-  //playerObject.display( 0, 0 );
-  //if key 'w' == true player.shoot
-  //if key 'a' or 'd' player.moveLeft or player.moveRight
+  background( 0 );
+  stroke( 255 );
+  strokeWeight( 2 );
+  line( width / 2, 0, width/2, height );
+  game();
+  bugObject.display( 0, 0 );
+  //println( bugX + " " + bugY );
+  //ellipse( 50, 100, 2, 2 );
 }// END draw()
 
 // FUNCTIONS
@@ -86,13 +74,28 @@ void draw()
 */
 void game()
 {
-  while ( gameState )
-  {
+    println( bugX );
+    bugObject.display( bugX, bugY );
     if ( frameCount % 60 == 0 )
     {
-      
+      bugX += random( 50, 50 );
+      bugY += random( 10, 25 );// random( bugSpeed, bugSpeed * 2 )?
+      if ( !inBoundsX( bugX ) )
+      {
+        if ( bugX + bugObject.bugsize / 2 > width / 2 )
+        {
+          bugX += random( -100, -50 );
+        }// END if()
+        else if ( bugX < 0 )
+        {
+          bugX += random( 50, 100 );
+        }// END else if()
+      }// END if()
     }// END if()
-  }// END while()
+  //playerObject.display( 0, 0 );
+  //if key 'w' == true player.shoot
+  //if key 'a' or 'd' player.moveLeft or player.moveRight
+ 
 }// END game()
 /*
   functon inBounds
@@ -102,7 +105,7 @@ void game()
 */
 boolean inBoundsX( float x )
 {
-  if ( x >= 0 && x <= width )
+  if ( x >= 0 && x + bugObject.bugsize * 1.5 <= width / 2 )
   {
     return true;
   }// END if()
